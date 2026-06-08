@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Перекрёсток эпох</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,6 +16,7 @@
             font-family: 'Georgia', 'Times New Roman', serif;
             overflow: hidden;
             position: relative;
+            -webkit-text-size-adjust: 100%;
         }
 
         .particles {
@@ -45,6 +46,7 @@
             position: relative;
             z-index: 1;
             text-align: center;
+            padding: 20px;
         }
 
         h1 {
@@ -91,6 +93,7 @@
             position: relative;
             overflow: hidden;
             animation: btnIn 1.5s ease-out 1s both;
+            -webkit-tap-highlight-color: transparent;
         }
 
         @keyframes btnIn {
@@ -104,6 +107,11 @@
             letter-spacing: 12px;
             border-color: #deb887;
             color: #deb887;
+        }
+
+        .btn:active {
+            background: rgba(200, 169, 110, 0.2);
+            transform: scale(0.98);
         }
 
         .btn::after {
@@ -151,6 +159,63 @@
             30% { opacity: 0.9; }
             100% { transform: scale(3) translateY(-150px); opacity: 0; }
         }
+
+        /* ===== ТЕЛЕФОНЫ ===== */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 36px;
+                letter-spacing: 8px;
+            }
+
+            @keyframes titleIn {
+                0% { opacity: 0; transform: translateY(-20px); letter-spacing: 16px; }
+                100% { opacity: 1; transform: translateY(0); letter-spacing: 8px; }
+            }
+
+            .subtitle {
+                font-size: 13px;
+                letter-spacing: 4px;
+                margin-bottom: 40px;
+            }
+
+            .btn {
+                padding: 14px 40px;
+                font-size: 16px;
+                letter-spacing: 4px;
+            }
+
+            .btn:hover {
+                letter-spacing: 6px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 28px;
+                letter-spacing: 5px;
+            }
+
+            @keyframes titleIn {
+                0% { opacity: 0; transform: translateY(-15px); letter-spacing: 12px; }
+                100% { opacity: 1; transform: translateY(0); letter-spacing: 5px; }
+            }
+
+            .subtitle {
+                font-size: 11px;
+                letter-spacing: 3px;
+                margin-bottom: 30px;
+            }
+
+            .btn {
+                padding: 12px 30px;
+                font-size: 14px;
+                letter-spacing: 3px;
+            }
+
+            .btn:hover {
+                letter-spacing: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -168,7 +233,8 @@
     <script>
         (function() {
             const container = document.getElementById('particles');
-            for (let i = 0; i < 40; i++) {
+            const count = window.innerWidth < 600 ? 20 : 40;
+            for (let i = 0; i < count; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
                 p.style.left = Math.random() * 100 + '%';
@@ -186,22 +252,26 @@
             const rect = btn.getBoundingClientRect();
             const cx = rect.left + rect.width / 2;
             const cy = rect.top + rect.height / 2;
+            const isMobile = window.innerWidth < 600;
 
             const smoke = document.getElementById('smokeContainer');
             smoke.innerHTML = '';
             
-            for (let i = 0; i < 40; i++) {
+            const particleCount = isMobile ? 20 : 40;
+            const spread = isMobile ? 150 : 300;
+            
+            for (let i = 0; i < particleCount; i++) {
                 setTimeout(() => {
                     const s = document.createElement('div');
-                    const size = Math.random() * 120 + 60;
+                    const size = Math.random() * 100 + 40;
                     s.style.cssText = `
                         position: absolute;
                         width: ${size}px;
                         height: ${size}px;
                         background: radial-gradient(circle, rgba(200,169,110,0.7) 0%, transparent 70%);
                         border-radius: 50%;
-                        left: ${cx + (Math.random() - 0.5) * 300}px;
-                        top: ${cy + (Math.random() - 0.5) * 150}px;
+                        left: ${cx + (Math.random() - 0.5) * spread}px;
+                        top: ${cy + (Math.random() - 0.5) * 100}px;
                         animation: smokeRise ${Math.random() * 2 + 2}s ease-out forwards;
                         animation-delay: ${Math.random() * 0.3}s;
                     `;

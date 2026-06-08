@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Экскурсия — Перекрёсток эпох</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
@@ -25,6 +25,7 @@
             color: #333;
             min-height: 100vh;
             animation: bodyFadeIn 1s ease-out;
+            -webkit-text-size-adjust: 100%;
         }
 
         @keyframes bodyFadeIn {
@@ -78,6 +79,7 @@
             display: flex;
             flex-direction: column;
             gap: 18px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .sidebar-block {
@@ -197,7 +199,16 @@
         .location-name { font-size: 13px; color: #333; letter-spacing: 1px; margin-bottom: 2px; }
         .location-addr { font-size: 11px; color: var(--brown); font-style: italic; }
 
-        .map-area { position: relative; background: #2a2a2a; }
+        .map-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-area { 
+            flex: 1;
+            position: relative; 
+            background: #2a2a2a; 
+        }
         #map { width: 100%; height: 100%; }
 
         .map-toggle {
@@ -231,14 +242,14 @@
         .map-toggle button:hover:not(.active) { color: var(--gold); }
 
         .map-info-bar {
-            position: absolute;
-            bottom: 15px; left: 15px; right: 15px;
             background: rgba(26, 26, 26, 0.95);
-            border: 1px solid rgba(200, 169, 110, 0.2);
+            border-top: 1px solid rgba(200, 169, 110, 0.2);
+            border-bottom: 1px solid rgba(200, 169, 110, 0.2);
             padding: 12px 18px;
             display: flex;
             align-items: center;
             gap: 20px;
+            flex-shrink: 0;
         }
 
         .map-info-bar .info-title {
@@ -286,6 +297,7 @@
             width: 100%; height: 100%;
             background: rgba(26, 26, 26, 0.98);
             animation: modalFade 0.3s;
+            -webkit-overflow-scrolling: touch;
         }
 
         @keyframes modalFade {
@@ -398,6 +410,7 @@
             display: flex;
             gap: 8px;
             margin-bottom: 18px;
+            flex-wrap: wrap;
         }
 
         .modal-tags span {
@@ -478,6 +491,49 @@
             text-align: right;
         }
 
+        .modal-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 0 0;
+            margin-top: 5px;
+            border-top: 1px solid rgba(139, 115, 85, 0.15);
+        }
+
+        .modal-nav button {
+            padding: 8px 16px;
+            background: transparent;
+            color: var(--brown);
+            border: 1px solid var(--brown);
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .modal-nav button:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        .modal-nav button:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .modal-nav button:disabled:hover {
+            border-color: var(--brown);
+            color: var(--brown);
+        }
+
+        .modal-nav .loc-counter {
+            font-size: 12px;
+            color: var(--brown);
+            letter-spacing: 2px;
+        }
+
         .leaflet-control-attribution {
             font-size: 10px !important;
             letter-spacing: 1px;
@@ -487,10 +543,201 @@
             color: #8b7355 !important;
         }
 
+        /* ===== АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ ===== */
         @media (max-width: 800px) {
-            .main-layout { grid-template-columns: 1fr; height: auto; }
-            #map { height: 55vh; }
-            .modal-image-wrap { height: 250px; }
+            .header {
+                padding: 12px 15px;
+            }
+            .header-title {
+                font-size: 16px;
+                letter-spacing: 4px;
+            }
+            .home-link {
+                left: 8px;
+                font-size: 11px;
+                letter-spacing: 1px;
+                padding: 6px 10px;
+            }
+
+            .main-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .sidebar {
+                max-height: 45vh;
+                padding: 12px;
+                gap: 10px;
+                border-right: none;
+                border-bottom: 2px solid rgba(139, 115, 85, 0.3);
+            }
+
+            .sidebar-block {
+                padding: 12px;
+            }
+
+            .block-text {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .location-item {
+                padding: 10px 12px;
+            }
+
+            .location-name {
+                font-size: 12px;
+            }
+
+            .location-addr {
+                font-size: 10px;
+            }
+
+            .map-column {
+                flex: 1;
+                min-height: 0;
+            }
+
+            #map {
+                height: 55vh;
+                min-height: 300px;
+            }
+
+            .map-toggle {
+                top: 8px;
+                right: 8px;
+            }
+
+            .map-toggle button {
+                padding: 8px 12px;
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .map-info-bar {
+                padding: 8px 12px;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .map-info-bar .info-title {
+                font-size: 11px;
+                letter-spacing: 1px;
+                flex: auto;
+                min-width: 100%;
+            }
+
+            .map-info-bar .info-stat {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .modal-content {
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                max-height: 100vh;
+                height: 100vh;
+                border-radius: 0;
+                border: none;
+            }
+
+            .modal-image-wrap {
+                height: 250px;
+            }
+
+            .modal-body {
+                padding: 15px;
+            }
+
+            .modal-body h2 {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+
+            .modal-address {
+                font-size: 11px;
+                margin-bottom: 10px;
+            }
+
+            .modal-tags {
+                gap: 5px;
+                margin-bottom: 12px;
+            }
+
+            .modal-tags span {
+                font-size: 9px;
+                padding: 3px 10px;
+                letter-spacing: 1px;
+            }
+
+            .modal-description {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            .audio-player {
+                padding: 10px 12px;
+                gap: 10px;
+            }
+
+            .play-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 14px;
+            }
+
+            .time-display {
+                font-size: 10px;
+                min-width: 70px;
+            }
+
+            .modal-nav {
+                padding: 15px 0 0 0;
+            }
+
+            .modal-nav button {
+                padding: 6px 12px;
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .modal-nav .loc-counter {
+                font-size: 10px;
+            }
+
+            .slider-btn {
+                font-size: 10px;
+                padding: 6px 12px;
+                letter-spacing: 1px;
+            }
+
+            .slider-label {
+                font-size: 10px;
+                padding: 4px 10px;
+            }
+        }
+
+        /* ===== МАЛЕНЬКИЕ ТЕЛЕФОНЫ ===== */
+        @media (max-width: 400px) {
+            .header-title {
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+
+            .modal-image-wrap {
+                height: 200px;
+            }
+
+            .modal-body h2 {
+                font-size: 16px;
+            }
+
+            .modal-description {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -525,23 +772,26 @@
             </div>
         </aside>
 
-        <main class="map-area">
-            <div class="map-toggle">
-                <button id="btnModern" class="active">современная</button>
-                <button id="btnHistorical">историческая</button>
-            </div>
-            <div id="map"></div>
+        <div class="map-column">
+            <main class="map-area">
+                <div class="map-toggle">
+                    <button id="btnModern" class="active">современная</button>
+                    <button id="btnHistorical">историческая</button>
+                </div>
+                <div id="map"></div>
+            </main>
             <div class="map-info-bar">
                 <span class="info-title" id="excTitle"></span>
                 <span class="info-stat" id="excDuration"></span>
                 <span class="info-stat" id="excDistance"></span>
             </div>
-        </main>
+        </div>
     </div>
 
     <div class="modal" id="modal">
         <div class="modal-content">
             <button class="modal-close">&times;</button>
+
             <div class="modal-image-wrap">
                 <img id="modalImg" src="" alt="">
                 <div class="slider-label" id="sliderLabel">современный вид</div>
@@ -565,6 +815,12 @@
                     </div>
                     <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
                 </div>
+                
+                <div class="modal-nav">
+                    <button id="modalPrev">← предыдущая</button>
+                    <span class="loc-counter" id="modalCounter">1 / 4</span>
+                    <button id="modalNext">следующая →</button>
+                </div>
             </div>
         </div>
     </div>
@@ -574,13 +830,14 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
         const STYLE_MODERN = {
-    tiles: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    filter: 'sepia(30%)'
-};
-const STYLE_HISTORICAL = {
-    tiles: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    filter: 'sepia(85%) contrast(1.3) brightness(0.85) saturate(0.15) grayscale(0.6)'
-};
+            tiles: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            filter: 'sepia(0%)'
+        };
+        const STYLE_HISTORICAL = {
+            tiles: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            filter: 'sepia(80%) brightness(0.9) contrast(1.1)'
+        };
+
         let map, tileLayer, currentStyle = 'modern';
         let markers = [], routeLine = null;
         let excursionData = null;
@@ -598,6 +855,7 @@ const STYLE_HISTORICAL = {
                 attributionControl: true 
             });
             setMapStyle('modern');
+            window.addEventListener('resize', () => { map.invalidateSize(); });
         }
 
         function setMapStyle(style) {
@@ -611,6 +869,7 @@ const STYLE_HISTORICAL = {
             currentStyle = style;
             document.getElementById('btnModern').classList.toggle('active', style === 'modern');
             document.getElementById('btnHistorical').classList.toggle('active', style === 'historical');
+            setTimeout(() => { map.invalidateSize(); }, 100);
         }
 
         async function loadExcursion() {
@@ -699,11 +958,10 @@ const STYLE_HISTORICAL = {
         function drawRoute() {
             if (routeLine) map.removeLayer(routeLine);
             const fullRoute = [
-                [56.0119, 92.8570], [56.0117, 92.8563], [56.0115, 92.8555],
-                [56.0112, 92.8548], [56.0108, 92.8537], [56.0109, 92.8534],
-                [56.0111, 92.8531], [56.0113, 92.8529], [56.0115, 92.8527],
-                [56.0112, 92.8524], [56.0109, 92.8521], [56.0105, 92.8518],
-                [56.0100, 92.8514], [56.0096, 92.8510], [56.0092, 92.8505]
+                [56.0119, 92.8570], [56.0116, 92.8566], [56.0114, 92.8561],
+                [56.0115, 92.8555], [56.0114, 92.8540], [56.0115, 92.8527],
+                [56.0112, 92.8524], [56.0105, 92.8518], [56.0100, 92.8514],
+                [56.0096, 92.8510], [56.0092, 92.8505]
             ];
             routeLine = L.polyline(fullRoute, {
                 color: '#3b6999', weight: 4, opacity: 0.8,
@@ -720,6 +978,16 @@ const STYLE_HISTORICAL = {
 
         function openModal(loc) {
             modalLocation = loc;
+            const idx = excursionData.locations.findIndex(l => l.id === loc.id);
+            if (idx >= 0) currentLocIndex = idx;
+            
+            fillModalContent(loc);
+            updateModalNavButtons();
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fillModalContent(loc) {
             currentPhotoType = 'modern';
             document.getElementById('modalImg').src = '/static/' + loc.modern_photo;
             document.getElementById('sliderLabel').textContent = 'современный вид';
@@ -740,8 +1008,38 @@ const STYLE_HISTORICAL = {
             } else {
                 document.getElementById('audioPlayerBlock').style.display = 'none';
             }
-            modal.style.display = 'block';
+            
+            document.getElementById('modalCounter').textContent = 
+                `${currentLocIndex + 1} / ${excursionData.locations.length}`;
         }
+
+        function updateModalNavButtons() {
+            const prevBtn = document.getElementById('modalPrev');
+            const nextBtn = document.getElementById('modalNext');
+            prevBtn.disabled = (currentLocIndex <= 0);
+            nextBtn.disabled = (currentLocIndex >= excursionData.locations.length - 1);
+        }
+
+        function navigateModal(direction) {
+            const newIndex = currentLocIndex + direction;
+            if (newIndex < 0 || newIndex >= excursionData.locations.length) return;
+            
+            const newLoc = excursionData.locations[newIndex];
+            currentLocIndex = newIndex;
+            selectLocation(newIndex);
+            fillModalContent(newLoc);
+            updateModalNavButtons();
+        }
+
+        document.getElementById('modalPrev').addEventListener('click', () => navigateModal(-1));
+        document.getElementById('modalNext').addEventListener('click', () => navigateModal(1));
+
+        document.addEventListener('keydown', function(e) {
+            if (modal.style.display !== 'block') return;
+            if (e.key === 'ArrowLeft') navigateModal(-1);
+            if (e.key === 'ArrowRight') navigateModal(1);
+            if (e.key === 'Escape') closeModal();
+        });
 
         function togglePhoto() {
             const btn = document.getElementById('sliderBtn');
@@ -760,6 +1058,7 @@ const STYLE_HISTORICAL = {
 
         function closeModal() {
             modal.style.display = 'none';
+            document.body.style.overflow = '';
             audio.pause();
         }
 

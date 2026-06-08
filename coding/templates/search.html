@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Поиск — Перекрёсток эпох</title>
     <style>
         :root {
@@ -21,6 +21,7 @@
             color: #333;
             min-height: 100vh;
             animation: fadeIn 1s ease-out;
+            -webkit-text-size-adjust: 100%;
         }
 
         @keyframes fadeIn {
@@ -85,6 +86,7 @@
             color: var(--gold);
             transition: all 0.3s;
             outline: none;
+            -webkit-appearance: none;
         }
 
         .search-input::placeholder {
@@ -127,6 +129,12 @@
             display: flex;
             align-items: center;
             gap: 18px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card:active {
+            background: rgba(59, 105, 153, 0.08);
+            transform: scale(0.98);
         }
 
         .card:hover {
@@ -185,6 +193,12 @@
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .excursion-card:active {
+            background: rgba(200, 169, 110, 0.15);
+            transform: scale(0.98);
         }
 
         .excursion-card:hover {
@@ -221,6 +235,131 @@
             padding: 30px;
             font-style: italic;
         }
+
+        /* ===== ТЕЛЕФОНЫ ===== */
+        @media (max-width: 600px) {
+            .header {
+                padding: 12px 15px;
+            }
+
+            .header-title {
+                font-size: 16px;
+                letter-spacing: 4px;
+            }
+
+            .home-link {
+                left: 8px;
+                font-size: 11px;
+                letter-spacing: 1px;
+                padding: 6px 10px;
+            }
+
+            .container {
+                margin: 30px auto;
+                padding: 0 15px;
+            }
+
+            .search-input {
+                font-size: 16px;
+                padding: 14px 16px;
+                letter-spacing: 1px;
+            }
+
+            .search-hint {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .card {
+                padding: 14px;
+                gap: 12px;
+            }
+
+            .card:hover {
+                transform: none;
+            }
+
+            .card-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .card-info h3 {
+                font-size: 14px;
+            }
+
+            .card-info p {
+                font-size: 11px;
+            }
+
+            .card-tags {
+                font-size: 9px;
+            }
+
+            .excursion-card {
+                padding: 18px;
+            }
+
+            .excursion-card h3 {
+                font-size: 16px;
+                letter-spacing: 2px;
+            }
+
+            .excursion-card p {
+                font-size: 11px;
+            }
+
+            .excursion-card .stats {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .results-label {
+                font-size: 9px;
+                letter-spacing: 3px;
+            }
+
+            .no-results {
+                font-size: 12px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .header-title {
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+
+            .search-input {
+                font-size: 14px;
+                padding: 12px 10px;
+            }
+
+            .card {
+                padding: 10px;
+                gap: 10px;
+            }
+
+            .card-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+
+            .card-info h3 {
+                font-size: 13px;
+            }
+
+            .excursion-card {
+                padding: 14px;
+            }
+
+            .excursion-card h3 {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -238,7 +377,6 @@
         </div>
 
         <div id="resultsContainer">
-            <!-- Рекомендуемая экскурсия -->
             <div class="results-section" id="recommendedSection">
                 <div class="results-label">рекомендуемая экскурсия</div>
                 <div class="excursion-card" id="recommendedExcursion">
@@ -263,7 +401,6 @@
         const searchInput = document.getElementById('searchInput');
         let searchTimeout;
 
-        // Загрузка рекомендуемой экскурсии
         async function loadRecommended() {
             const r = await fetch('/api/excursions');
             const excursions = await r.json();
@@ -281,7 +418,6 @@
             }
         }
 
-        // Поиск
         searchInput.addEventListener('input', function() {
             clearTimeout(searchTimeout);
             const q = this.value.trim();
@@ -301,7 +437,6 @@
                 document.getElementById('recommendedSection').style.display = 'none';
                 document.getElementById('searchResultsSection').style.display = 'block';
 
-                // Экскурсии
                 const exDiv = document.getElementById('excursionsResults');
                 if (data.excursions.length === 0) {
                     exDiv.innerHTML = '<div class="no-results">экскурсии не найдены</div>';
@@ -323,7 +458,6 @@
                     });
                 }
 
-                // Локации
                 const locDiv = document.getElementById('locationsResults');
                 if (data.locations.length === 0) {
                     locDiv.innerHTML = '<div class="no-results">локации не найдены</div>';

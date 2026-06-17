@@ -2,84 +2,60 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Админ-панель — Перекрёсток эпох</title>
     <style>
-        :root { --dark: #1a1a1a; --gold: #c8a96e; --brown: #8b7355; --panel: #f5f0e8; }
+        :root { --dark: #1a1a1a; --gold: #c8a96e; --brown: #8b7355; --panel: #f5f0e8; --red: #c0392b; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
             background: var(--dark);
             color: #333;
             min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
         }
-        .header {
-            background: var(--dark);
-            padding: 18px 30px;
-            text-align: center;
-            border-bottom: 1px solid rgba(200, 169, 110, 0.2);
-            position: relative;
+
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
         }
-        .header h1 {
-            color: var(--gold);
-            font-size: 24px;
-            letter-spacing: 8px;
-            font-weight: normal;
-            text-transform: uppercase;
-        }
-        .back-link {
-            position: absolute;
-            left: 30px; top: 50%;
-            transform: translateY(-50%);
-            color: var(--gold);
-            text-decoration: none;
-            font-size: 14px;
-            letter-spacing: 2px;
-            border: 1px solid rgba(200, 169, 110, 0.3);
-            padding: 8px 16px;
-            transition: all 0.3s;
-        }
-        .back-link:hover { border-color: var(--gold); }
-        .container { max-width: 600px; margin: 40px auto; padding: 0 20px; }
-        .section {
+
+        .login-box {
             background: var(--panel);
-            border: 1px solid rgba(139, 115, 85, 0.3);
-            padding: 25px;
-            margin-bottom: 25px;
+            border: 1px solid rgba(200, 169, 110, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
         }
-        .section h2 {
-            font-size: 14px;
+
+        .login-box h1 {
+            font-size: 20px;
             letter-spacing: 4px;
             color: var(--brown);
-            text-transform: uppercase;
-            margin-bottom: 20px;
             font-weight: normal;
-            text-align: center;
-        }
-        .form-group { margin-bottom: 14px; }
-        label {
-            display: block;
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: var(--brown);
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-bottom: 30px;
         }
-        input, textarea, select {
+
+        .login-box input {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 16px;
+            margin-bottom: 15px;
             border: 1px solid rgba(139, 115, 85, 0.3);
             font-family: 'Georgia', serif;
-            font-size: 14px;
+            font-size: 16px;
             background: #fff;
             color: #333;
-        }
-        input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: var(--gold);
         }
-        textarea { min-height: 80px; resize: vertical; }
-        button {
+
+        .login-box input:focus { border-color: var(--gold); }
+
+        .login-box button {
             width: 100%;
             padding: 12px;
             background: var(--dark);
@@ -92,113 +68,390 @@
             text-transform: uppercase;
             transition: all 0.3s;
         }
-        button:hover { background: rgba(200, 169, 110, 0.1); }
+
+        .login-box button:hover { background: rgba(200, 169, 110, 0.1); }
+
+        .login-error {
+            color: var(--red);
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .login-error.show { display: block; }
+
+        .admin-screen { display: none; }
+        .admin-screen.visible { display: block; }
+        .login-screen.hidden { display: none; }
+
+        .header {
+            background: var(--dark);
+            padding: 18px 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(200, 169, 110, 0.2);
+            position: relative;
+        }
+
+        .header h1 {
+            color: var(--gold);
+            font-size: 20px;
+            letter-spacing: 6px;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+
+        .logout-link {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--brown);
+            font-size: 12px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            padding: 6px 12px;
+            transition: all 0.3s;
+        }
+
+        .logout-link:hover { border-color: var(--red); color: var(--red); }
+
+        .back-link {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 2px;
+            border: 1px solid rgba(200, 169, 110, 0.3);
+            padding: 6px 12px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover { border-color: var(--gold); }
+
+        .container { max-width: 600px; margin: 40px auto; padding: 0 20px; }
+
+        .section {
+            background: var(--panel);
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            font-size: 13px;
+            letter-spacing: 4px;
+            color: var(--brown);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        .form-group { margin-bottom: 14px; }
+
+        label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--brown);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+            background: #fff;
+            color: #333;
+            outline: none;
+        }
+
+        input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+
+        textarea { min-height: 80px; resize: vertical; }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: var(--dark);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            font-family: 'Georgia', serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        button[type="submit"]:hover { background: rgba(200, 169, 110, 0.1); }
+
+        .btn-danger {
+            background: var(--red) !important;
+            border-color: var(--red) !important;
+            color: #fff !important;
+        }
+
+        .btn-danger:hover {
+            background: #e74c3c !important;
+        }
+
         .success {
-            background: #2ecc71;
+            background: #27ae60;
             color: #fff;
             padding: 12px;
             text-align: center;
             margin-bottom: 15px;
-            font-size: 13px;
+            font-size: 12px;
             letter-spacing: 1px;
             display: none;
         }
+
         .success.show { display: block; }
+
+        @media (max-width: 600px) {
+            .header { padding: 12px 10px; }
+            .header h1 { font-size: 16px; letter-spacing: 4px; }
+            .back-link { left: 5px; font-size: 10px; padding: 4px 8px; }
+            .logout-link { right: 5px; font-size: 10px; padding: 4px 8px; }
+            .container { margin: 20px auto; padding: 0 10px; }
+            .section { padding: 16px; }
+            .login-box { padding: 25px; }
+            .login-box h1 { font-size: 16px; letter-spacing: 3px; }
+            input, textarea, select { font-size: 16px; }
+        }
     </style>
 </head>
 <body>
-    <header class="header">
-        <a href="/" class="back-link">на главную</a>
-        <h1>администрирование</h1>
-    </header>
 
-    <div class="container">
-        <!-- Загрузка файла -->
-        <div class="section">
-            <h2>загрузить файл</h2>
-            <div class="success" id="uploadSuccess">Файл загружен</div>
-            <form id="uploadForm" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label>Выберите файл</label>
-                    <input type="file" name="file" required>
-                </div>
-                <div class="form-group">
-                    <label>Папка</label>
-                    <select name="folder">
-                        <option value="photos/modern">photos/modern</option>
-                        <option value="photos/historical">photos/historical</option>
-                        <option value="audio">audio</option>
-                        <option value="thumbnails">thumbnails</option>
-                    </select>
-                </div>
-                <button type="submit">загрузить</button>
-            </form>
+    <!-- ЭКРАН ВХОДА -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <h1>админ-панель</h1>
+            <input type="password" id="passwordInput" placeholder="введите пароль" autofocus>
+            <button id="loginBtn">войти</button>
+            <p class="login-error" id="loginError">неверный пароль</p>
         </div>
+    </div>
 
-        <!-- Создание экскурсии -->
-        <div class="section">
-            <h2>создать экскурсию</h2>
-            <div class="success" id="excursionSuccess">Экскурсия создана</div>
-            <form id="excursionForm">
-                <div class="form-group"><label>Название</label><input type="text" name="name" required></div>
-                <div class="form-group"><label>Описание</label><textarea name="description"></textarea></div>
-                <div class="form-group"><label>Длительность</label><input type="text" name="duration" placeholder="2 часа"></div>
-                <div class="form-group"><label>Протяжённость</label><input type="text" name="distance" placeholder="3 км"></div>
-                <button type="submit">создать</button>
-            </form>
-        </div>
+    <!-- АДМИН-ПАНЕЛЬ -->
+    <div class="admin-screen" id="adminScreen">
+        <header class="header">
+            <a href="/" class="back-link">на главную</a>
+            <h1>администрирование</h1>
+            <span class="logout-link" id="logoutBtn">выйти</span>
+        </header>
 
-        <!-- Создание локации -->
-        <div class="section">
-            <h2>создать локацию</h2>
-            <div class="success" id="locationSuccess">Локация создана</div>
-            <form id="locationForm">
-                <div class="form-group"><label>Название</label><input type="text" name="name" required></div>
-                <div class="form-group"><label>Широта (lat)</label><input type="text" name="lat" required placeholder="56.0105"></div>
-                <div class="form-group"><label>Долгота (lng)</label><input type="text" name="lng" required placeholder="92.8525"></div>
-                <div class="form-group"><label>Адрес</label><input type="text" name="address"></div>
-                <div class="form-group"><label>Путь к историческому фото</label><input type="text" name="historical_photo" placeholder="photos/historical/name_old.jpg"></div>
-                <div class="form-group"><label>Путь к современному фото</label><input type="text" name="modern_photo" placeholder="photos/modern/name_new.jpg"></div>
-                <div class="form-group"><label>Путь к аудио</label><input type="text" name="audio_file" placeholder="audio/name.mp3"></div>
-                <div class="form-group"><label>Описание</label><textarea name="description"></textarea></div>
-                <div class="form-group"><label>Год</label><input type="text" name="year"></div>
-                <div class="form-group"><label>Теги</label><input type="text" name="tags" placeholder="через запятую"></div>
-                <div class="form-group"><label>Миниатюра</label><input type="text" name="thumbnail" placeholder="thumbnails/name.jpg"></div>
-                <button type="submit">создать</button>
-            </form>
-        </div>
+        <div class="container">
+            <!-- Загрузка файла -->
+            <div class="section">
+                <h2>загрузить файл</h2>
+                <div class="success" id="uploadSuccess">Файл загружен</div>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Выберите файл</label>
+                        <input type="file" name="file" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Папка</label>
+                        <select name="folder">
+                            <option value="photos/modern">photos/modern</option>
+                            <option value="photos/historical">photos/historical</option>
+                            <option value="audio">audio</option>
+                            <option value="thumbnails">thumbnails</option>
+                        </select>
+                    </div>
+                    <button type="submit">загрузить</button>
+                </form>
+            </div>
 
-        <!-- Добавление локации в экскурсию -->
-        <div class="section">
-            <h2>добавить локацию в экскурсию</h2>
-            <div class="success" id="linkSuccess">Локация добавлена</div>
-            <form id="linkForm">
-                <div class="form-group"><label>Экскурсия</label><select name="excursion_id" id="excursionSelect" required><option value="">выберите...</option></select></div>
-                <div class="form-group"><label>Локация</label><select name="location_id" id="locationSelect" required><option value="">выберите...</option></select></div>
-                <div class="form-group"><label>Порядковый номер</label><input type="number" name="order_num" min="1" value="1"></div>
-                <button type="submit">добавить</button>
-            </form>
+            <!-- Создание экскурсии -->
+            <div class="section">
+                <h2>создать экскурсию</h2>
+                <div class="success" id="excursionSuccess">Экскурсия создана</div>
+                <form id="excursionForm">
+                    <div class="form-group"><label>Название</label><input type="text" name="name" required></div>
+                    <div class="form-group"><label>Описание</label><textarea name="description"></textarea></div>
+                    <div class="form-group"><label>Длительность</label><input type="text" name="duration" placeholder="2 часа"></div>
+                    <div class="form-group"><label>Протяжённость</label><input type="text" name="distance" placeholder="3 км"></div>
+                    <button type="submit">создать</button>
+                </form>
+            </div>
+
+            <!-- Создание локации -->
+            <div class="section">
+                <h2>создать локацию</h2>
+                <div class="success" id="locationSuccess">Локация создана</div>
+                <form id="locationForm">
+                    <div class="form-group"><label>Название</label><input type="text" name="name" required></div>
+                    <div class="form-group"><label>Широта (lat)</label><input type="text" name="lat" required placeholder="56.0105"></div>
+                    <div class="form-group"><label>Долгота (lng)</label><input type="text" name="lng" required placeholder="92.8525"></div>
+                    <div class="form-group"><label>Адрес</label><input type="text" name="address"></div>
+                    <div class="form-group"><label>Историческое фото</label><input type="text" name="historical_photo" placeholder="photos/historical/name_old.jpg"></div>
+                    <div class="form-group"><label>Современное фото</label><input type="text" name="modern_photo" placeholder="photos/modern/name_new.jpg"></div>
+                    <div class="form-group"><label>Аудио</label><input type="text" name="audio_file" placeholder="audio/name.mp3"></div>
+                    <div class="form-group"><label>Описание</label><textarea name="description"></textarea></div>
+                    <div class="form-group"><label>Год</label><input type="text" name="year"></div>
+                    <div class="form-group"><label>Теги</label><input type="text" name="tags" placeholder="через запятую"></div>
+                    <div class="form-group"><label>Краткое описание</label><input type="text" name="short_description"></div>
+                    <button type="submit">создать</button>
+                </form>
+            </div>
+
+            <!-- Добавление в экскурсию -->
+            <div class="section">
+                <h2>добавить локацию в экскурсию</h2>
+                <div class="success" id="linkSuccess">Локация добавлена</div>
+                <form id="linkForm">
+                    <div class="form-group"><label>Экскурсия</label><select name="excursion_id" id="excursionSelect" required><option value="">выберите...</option></select></div>
+                    <div class="form-group"><label>Локация</label><select name="location_id" id="locationSelect" required><option value="">выберите...</option></select></div>
+                    <div class="form-group"><label>Порядковый номер</label><input type="number" name="order_num" min="1" value="1"></div>
+                    <button type="submit">добавить</button>
+                </form>
+            </div>
+
+            <!-- УДАЛЕНИЕ -->
+            <div class="section">
+                <h2>удалить</h2>
+                <div class="success" id="deleteSuccess">Удалено</div>
+                <form id="deleteForm">
+                    <div class="form-group">
+                        <label>Что удалить</label>
+                        <select id="deleteType">
+                            <option value="location">Локацию</option>
+                            <option value="excursion">Экскурсию</option>
+                            <option value="link">Связь (локацию из экскурсии)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="deleteExcursionGroup" style="display:none;">
+                        <label>Из какой экскурсии</label>
+                        <select id="deleteExcursionSelect">
+                            <option value="">выберите...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Элемент для удаления</label>
+                        <select id="deleteItemSelect" required>
+                            <option value="">выберите...</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-danger">удалить</button>
+                </form>
+            </div>
         </div>
     </div>
 
     <script>
+        const ADMIN_PASSWORD = 'krasnoyarsk2024';
+
+        // ===== ВХОД =====
+        function checkAuth() {
+            return sessionStorage.getItem('admin_authenticated') === 'true';
+        }
+
+        function showAdmin() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('adminScreen').classList.add('visible');
+            loadSelects();
+            loadDeleteSelects();
+        }
+
+        function showLogin() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('adminScreen').classList.remove('visible');
+        }
+
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            if (document.getElementById('passwordInput').value === ADMIN_PASSWORD) {
+                sessionStorage.setItem('admin_authenticated', 'true');
+                showAdmin();
+            } else {
+                document.getElementById('loginError').classList.add('show');
+                document.getElementById('passwordInput').value = '';
+                setTimeout(() => document.getElementById('loginError').classList.remove('show'), 2000);
+            }
+        });
+
+        document.getElementById('passwordInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('loginBtn').click();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('admin_authenticated');
+            showLogin();
+        });
+
+        if (checkAuth()) showAdmin();
+
+        // ===== ЗАГРУЗКА СПИСКОВ =====
         async function loadSelects() {
             const [exRes, locRes] = await Promise.all([fetch('/api/excursions'), fetch('/api/locations')]);
             const excursions = await exRes.json();
             const locations = await locRes.json();
+
             const exSelect = document.getElementById('excursionSelect');
+            exSelect.innerHTML = '<option value="">выберите...</option>';
             excursions.forEach(e => { exSelect.innerHTML += `<option value="${e.id}">${e.name}</option>`; });
+
             const locSelect = document.getElementById('locationSelect');
+            locSelect.innerHTML = '<option value="">выберите...</option>';
             locations.forEach(l => { locSelect.innerHTML += `<option value="${l.id}">${l.name}</option>`; });
         }
 
+        // ===== ЗАГРУЗКА ДЛЯ УДАЛЕНИЯ =====
+        document.getElementById('deleteType').addEventListener('change', function() {
+            document.getElementById('deleteExcursionGroup').style.display = (this.value === 'link') ? 'block' : 'none';
+            loadDeleteSelects();
+        });
+
+        async function loadDeleteSelects() {
+            const type = document.getElementById('deleteType').value;
+            const itemSelect = document.getElementById('deleteItemSelect');
+            itemSelect.innerHTML = '<option value="">выберите...</option>';
+
+            if (type === 'excursion') {
+                const r = await fetch('/api/excursions');
+                const data = await r.json();
+                data.forEach(e => { itemSelect.innerHTML += `<option value="exc_${e.id}">${e.name}</option>`; });
+            } else if (type === 'location') {
+                const r = await fetch('/api/locations');
+                const data = await r.json();
+                data.forEach(l => { itemSelect.innerHTML += `<option value="loc_${l.id}">${l.name}</option>`; });
+            } else if (type === 'link') {
+                const r = await fetch('/api/excursions');
+                const data = await r.json();
+                const exSelect = document.getElementById('deleteExcursionSelect');
+                exSelect.innerHTML = '<option value="">выберите...</option>';
+                data.forEach(e => { exSelect.innerHTML += `<option value="${e.id}">${e.name}</option>`; });
+            }
+        }
+
+        document.getElementById('deleteExcursionSelect').addEventListener('change', async function() {
+            const eid = this.value;
+            const itemSelect = document.getElementById('deleteItemSelect');
+            itemSelect.innerHTML = '<option value="">выберите...</option>';
+            if (!eid) return;
+            const r = await fetch(`/api/excursions/${eid}/locations`);
+            const data = await r.json();
+            data.locations.forEach(l => { itemSelect.innerHTML += `<option value="link_${l.id}">${l.name}</option>`; });
+        });
+
+        // ===== ФОРМЫ =====
         document.getElementById('uploadForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(this);
             const res = await fetch('/api/upload', { method: 'POST', body: formData });
             if (res.ok) {
                 const data = await res.json();
-                document.getElementById('uploadSuccess').textContent = `Файл загружен: ${data.path}`;
+                document.getElementById('uploadSuccess').textContent = `Загружен: ${data.path}`;
                 document.getElementById('uploadSuccess').classList.add('show');
                 setTimeout(() => document.getElementById('uploadSuccess').classList.remove('show'), 3000);
                 this.reset();
@@ -214,6 +467,7 @@
                 setTimeout(() => document.getElementById('excursionSuccess').classList.remove('show'), 3000);
                 this.reset();
                 loadSelects();
+                loadDeleteSelects();
             }
         });
 
@@ -226,6 +480,7 @@
                 setTimeout(() => document.getElementById('locationSuccess').classList.remove('show'), 3000);
                 this.reset();
                 loadSelects();
+                loadDeleteSelects();
             }
         });
 
@@ -243,7 +498,33 @@
             }
         });
 
-        loadSelects();
+        document.getElementById('deleteForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const type = document.getElementById('deleteType').value;
+            const itemVal = document.getElementById('deleteItemSelect').value;
+            if (!itemVal) return;
+            if (!confirm('Вы уверены? Это действие нельзя отменить.')) return;
+
+            let url = '';
+            if (type === 'excursion') {
+                url = `/api/excursions/${itemVal.replace('exc_', '')}`;
+            } else if (type === 'location') {
+                url = `/api/locations/${itemVal.replace('loc_', '')}`;
+            } else if (type === 'link') {
+                const eid = document.getElementById('deleteExcursionSelect').value;
+                url = `/api/excursions/${eid}/locations/${itemVal.replace('link_', '')}`;
+            }
+
+            const res = await fetch(url, { method: 'DELETE' });
+            if (res.ok) {
+                document.getElementById('deleteSuccess').classList.add('show');
+                setTimeout(() => document.getElementById('deleteSuccess').classList.remove('show'), 3000);
+                this.reset();
+                document.getElementById('deleteExcursionGroup').style.display = 'none';
+                loadSelects();
+                loadDeleteSelects();
+            }
+        });
     </script>
 </body>
 </html>

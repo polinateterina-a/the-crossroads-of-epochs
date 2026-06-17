@@ -115,6 +115,8 @@
             font-size: 12px;
             color: var(--blue);
             letter-spacing: 2px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .audio-mini:hover {
@@ -126,6 +128,13 @@
             background: var(--blue);
             color: #fff;
             border-color: var(--blue);
+        }
+
+        .play-icon {
+            display: inline-block;
+            width: 18px;
+            text-align: center;
+            font-size: 14px;
         }
 
         .route-title {
@@ -155,6 +164,7 @@
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .location-item:hover {
@@ -450,6 +460,7 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            user-select: none;
         }
 
         .play-btn:hover { background: rgba(200, 169, 110, 0.1); }
@@ -543,201 +554,47 @@
             color: #8b7355 !important;
         }
 
-        /* ===== АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ ===== */
         @media (max-width: 800px) {
-            .header {
-                padding: 12px 15px;
-            }
-            .header-title {
-                font-size: 16px;
-                letter-spacing: 4px;
-            }
-            .home-link {
-                left: 8px;
-                font-size: 11px;
-                letter-spacing: 1px;
-                padding: 6px 10px;
-            }
-
-            .main-layout {
-                grid-template-columns: 1fr;
-                height: auto;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .sidebar {
-                max-height: 45vh;
-                padding: 12px;
-                gap: 10px;
-                border-right: none;
-                border-bottom: 2px solid rgba(139, 115, 85, 0.3);
-            }
-
-            .sidebar-block {
-                padding: 12px;
-            }
-
-            .block-text {
-                font-size: 12px;
-                line-height: 1.5;
-            }
-
-            .location-item {
-                padding: 10px 12px;
-            }
-
-            .location-name {
-                font-size: 12px;
-            }
-
-            .location-addr {
-                font-size: 10px;
-            }
-
-            .map-column {
-                flex: 1;
-                min-height: 0;
-            }
-
-            #map {
-                height: 55vh;
-                min-height: 300px;
-            }
-
-            .map-toggle {
-                top: 8px;
-                right: 8px;
-            }
-
-            .map-toggle button {
-                padding: 8px 12px;
-                font-size: 10px;
-                letter-spacing: 1px;
-            }
-
-            .map-info-bar {
-                padding: 8px 12px;
-                gap: 10px;
-                flex-wrap: wrap;
-            }
-
-            .map-info-bar .info-title {
-                font-size: 11px;
-                letter-spacing: 1px;
-                flex: auto;
-                min-width: 100%;
-            }
-
-            .map-info-bar .info-stat {
-                font-size: 10px;
-                letter-spacing: 1px;
-            }
-
-            .modal-content {
-                margin: 0;
-                width: 100%;
-                max-width: 100%;
-                max-height: 100vh;
-                height: 100vh;
-                border-radius: 0;
-                border: none;
-            }
-
-            .modal-image-wrap {
-                height: 250px;
-            }
-
-            .modal-body {
-                padding: 15px;
-            }
-
-            .modal-body h2 {
-                font-size: 18px;
-                letter-spacing: 1px;
-            }
-
-            .modal-address {
-                font-size: 11px;
-                margin-bottom: 10px;
-            }
-
-            .modal-tags {
-                gap: 5px;
-                margin-bottom: 12px;
-            }
-
-            .modal-tags span {
-                font-size: 9px;
-                padding: 3px 10px;
-                letter-spacing: 1px;
-            }
-
-            .modal-description {
-                font-size: 13px;
-                line-height: 1.6;
-            }
-
-            .audio-player {
-                padding: 10px 12px;
-                gap: 10px;
-            }
-
-            .play-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 14px;
-            }
-
-            .time-display {
-                font-size: 10px;
-                min-width: 70px;
-            }
-
-            .modal-nav {
-                padding: 15px 0 0 0;
-            }
-
-            .modal-nav button {
-                padding: 6px 12px;
-                font-size: 10px;
-                letter-spacing: 1px;
-            }
-
-            .modal-nav .loc-counter {
-                font-size: 10px;
-            }
-
-            .slider-btn {
-                font-size: 10px;
-                padding: 6px 12px;
-                letter-spacing: 1px;
-            }
-
-            .slider-label {
-                font-size: 10px;
-                padding: 4px 10px;
-            }
+            .header { padding: 12px 15px; }
+            .header-title { font-size: 16px; letter-spacing: 4px; }
+            .home-link { left: 8px; font-size: 11px; letter-spacing: 1px; padding: 6px 10px; }
+            .main-layout { grid-template-columns: 1fr; height: auto; display: flex; flex-direction: column; }
+            .sidebar { max-height: 45vh; padding: 12px; gap: 10px; border-right: none; border-bottom: 2px solid rgba(139, 115, 85, 0.3); }
+            .sidebar-block { padding: 12px; }
+            .block-text { font-size: 12px; line-height: 1.5; }
+            .location-item { padding: 10px 12px; }
+            .location-name { font-size: 12px; }
+            .location-addr { font-size: 10px; }
+            .map-column { flex: 1; min-height: 0; }
+            #map { height: 55vh; min-height: 300px; }
+            .map-toggle { top: 8px; right: 8px; }
+            .map-toggle button { padding: 8px 12px; font-size: 10px; letter-spacing: 1px; }
+            .map-info-bar { padding: 8px 12px; gap: 10px; flex-wrap: wrap; }
+            .map-info-bar .info-title { font-size: 11px; letter-spacing: 1px; flex: auto; min-width: 100%; }
+            .map-info-bar .info-stat { font-size: 10px; letter-spacing: 1px; }
+            .modal-content { margin: 0; width: 100%; max-width: 100%; max-height: 100vh; height: 100vh; border-radius: 0; border: none; }
+            .modal-image-wrap { height: 250px; }
+            .modal-body { padding: 15px; }
+            .modal-body h2 { font-size: 18px; letter-spacing: 1px; }
+            .modal-address { font-size: 11px; margin-bottom: 10px; }
+            .modal-tags { gap: 5px; margin-bottom: 12px; }
+            .modal-tags span { font-size: 9px; padding: 3px 10px; letter-spacing: 1px; }
+            .modal-description { font-size: 13px; line-height: 1.6; }
+            .audio-player { padding: 10px 12px; gap: 10px; }
+            .play-btn { width: 34px; height: 34px; font-size: 14px; }
+            .time-display { font-size: 10px; min-width: 70px; }
+            .modal-nav { padding: 15px 0 0 0; }
+            .modal-nav button { padding: 6px 12px; font-size: 10px; letter-spacing: 1px; }
+            .modal-nav .loc-counter { font-size: 10px; }
+            .slider-btn { font-size: 10px; padding: 6px 12px; letter-spacing: 1px; }
+            .slider-label { font-size: 10px; padding: 4px 10px; }
         }
 
-        /* ===== МАЛЕНЬКИЕ ТЕЛЕФОНЫ ===== */
         @media (max-width: 400px) {
-            .header-title {
-                font-size: 14px;
-                letter-spacing: 2px;
-            }
-
-            .modal-image-wrap {
-                height: 200px;
-            }
-
-            .modal-body h2 {
-                font-size: 16px;
-            }
-
-            .modal-description {
-                font-size: 12px;
-            }
+            .header-title { font-size: 14px; letter-spacing: 2px; }
+            .modal-image-wrap { height: 200px; }
+            .modal-body h2 { font-size: 16px; }
+            .modal-description { font-size: 12px; }
         }
     </style>
 </head>
@@ -754,7 +611,7 @@
                 <div class="block-label">начало маршрута</div>
                 <p class="block-text" id="startDesc"></p>
                 <div class="audio-mini" id="startAudio">
-                    <span>&#9654;</span><span>прослушать вступление</span>
+                    <span class="play-icon">▶</span><span>прослушать вступление</span>
                 </div>
             </div>
 
@@ -767,7 +624,7 @@
                 <div class="block-label">завершение</div>
                 <p class="block-text" id="endDesc"></p>
                 <div class="audio-mini" id="endAudio">
-                    <span>&#9654;</span><span>прослушать заключение</span>
+                    <span class="play-icon">▶</span><span>прослушать заключение</span>
                 </div>
             </div>
         </aside>
@@ -808,7 +665,7 @@
                 </div>
                 <p class="modal-description" id="modalDesc"></p>
                 <div class="audio-player" id="audioPlayerBlock">
-                    <button class="play-btn" id="modalPlay">&#9654;</button>
+                    <button class="play-btn" id="modalPlay">▶</button>
                     <div class="progress-wrap">
                         <div class="progress-fill" id="progressFill"></div>
                         <input type="range" id="progressInput" min="0" value="0" step="0.1">
@@ -846,6 +703,8 @@
         let modalLocation = null;
         const audio = document.getElementById('globalAudio');
         const modal = document.getElementById('modal');
+
+        // ===== КАРТА =====
 
         function initMap() {
             map = L.map('map', { 
@@ -905,20 +764,62 @@
             });
         }
 
+        // ===== АУДИО (ИСПРАВЛЕНО ДЛЯ ТЕЛЕФОНОВ) =====
+
+        function updatePlayIcon(btn, isPlaying) {
+            const icon = btn.querySelector('.play-icon');
+            if (icon) {
+                icon.textContent = isPlaying ? '⏸' : '▶';
+            }
+        }
+
         function toggleSideAudio(type, file, btnId) {
             const btn = document.getElementById(btnId);
+
+            // Уже играет этот трек — остановить
             if (audio.src.includes(file) && !audio.paused) {
-                audio.pause(); btn.classList.remove('playing'); return;
+                audio.pause();
+                btn.classList.remove('playing');
+                updatePlayIcon(btn, false);
+                return;
             }
+
+            // Остановить всё
             stopAllSideAudio();
+
+            // Загрузить и играть
             audio.src = '/static/' + file;
-            audio.play().then(() => btn.classList.add('playing')).catch(() => {});
+            audio.load();
+
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    btn.classList.add('playing');
+                    updatePlayIcon(btn, true);
+                }).catch(() => {
+                    // Автовоспроизведение заблокировано — кнопка остаётся в исходном состоянии
+                    btn.classList.remove('playing');
+                    updatePlayIcon(btn, false);
+                });
+            }
         }
 
         function stopAllSideAudio() {
             audio.pause();
-            document.querySelectorAll('.audio-mini').forEach(b => b.classList.remove('playing'));
+            document.querySelectorAll('.audio-mini').forEach(b => {
+                b.classList.remove('playing');
+                updatePlayIcon(b, false);
+            });
         }
+
+        audio.addEventListener('ended', () => {
+            // Сброс всех кнопок при завершении трека
+            document.getElementById('modalPlay').classList.remove('playing');
+            document.getElementById('modalPlay').textContent = '▶';
+            stopAllSideAudio();
+        });
+
+        // ===== МАРКЕРЫ =====
 
         function renderMarkers() {
             markers.forEach(m => map.removeLayer(m));
@@ -976,6 +877,8 @@
             document.getElementById('excDistance').textContent = ex.distance;
         }
 
+        // ===== МОДАЛЬНОЕ ОКНО =====
+
         function openModal(loc) {
             modalLocation = loc;
             const idx = excursionData.locations.findIndex(l => l.id === loc.id);
@@ -1002,7 +905,9 @@
             if (loc.audio_file) {
                 document.getElementById('audioPlayerBlock').style.display = 'flex';
                 audio.src = '/static/' + loc.audio_file;
+                audio.load();
                 document.getElementById('modalPlay').classList.remove('playing');
+                document.getElementById('modalPlay').textContent = '▶';
                 document.getElementById('progressFill').style.width = '0%';
                 document.getElementById('timeDisplay').textContent = '00:00 / 00:00';
             } else {
@@ -1014,10 +919,8 @@
         }
 
         function updateModalNavButtons() {
-            const prevBtn = document.getElementById('modalPrev');
-            const nextBtn = document.getElementById('modalNext');
-            prevBtn.disabled = (currentLocIndex <= 0);
-            nextBtn.disabled = (currentLocIndex >= excursionData.locations.length - 1);
+            document.getElementById('modalPrev').disabled = (currentLocIndex <= 0);
+            document.getElementById('modalNext').disabled = (currentLocIndex >= excursionData.locations.length - 1);
         }
 
         function navigateModal(direction) {
@@ -1062,13 +965,24 @@
             audio.pause();
         }
 
+        // Кнопка play/pause в модальном окне
         document.getElementById('modalPlay').addEventListener('click', function() {
             if (audio.paused) {
-                audio.play();
-                this.classList.add('playing');
+                audio.load();
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        this.classList.add('playing');
+                        this.textContent = '⏸';
+                    }).catch(() => {
+                        this.classList.remove('playing');
+                        this.textContent = '▶';
+                    });
+                }
             } else {
                 audio.pause();
                 this.classList.remove('playing');
+                this.textContent = '▶';
             }
         });
 
@@ -1083,11 +997,6 @@
             const ts = Math.floor(audio.duration % 60);
             document.getElementById('timeDisplay').textContent =
                 `${String(cm).padStart(2,'0')}:${String(cs).padStart(2,'0')} / ${String(tm).padStart(2,'0')}:${String(ts).padStart(2,'0')}`;
-        });
-
-        audio.addEventListener('ended', () => {
-            document.getElementById('modalPlay').classList.remove('playing');
-            stopAllSideAudio();
         });
 
         document.getElementById('progressInput').addEventListener('input', function() {
